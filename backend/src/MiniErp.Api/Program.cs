@@ -66,6 +66,9 @@ if (app.Configuration.GetValue<bool>("Database:MigrateOnStartup"))
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
+
+    if (app.Configuration.GetValue<bool>("Database:Seed"))
+        await Seeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>());
 }
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" })).ExcludeFromDescription();
