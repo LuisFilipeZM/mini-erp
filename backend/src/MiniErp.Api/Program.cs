@@ -9,6 +9,7 @@ using MiniErp.Api.Common;
 using MiniErp.Api.Data;
 using MiniErp.Api.Domain;
 using MiniErp.Api.Features.Auth;
+using MiniErp.Api.Features.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,7 @@ if (app.Configuration.GetValue<bool>("Database:MigrateOnStartup"))
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" })).ExcludeFromDescription();
 app.MapAuth();
+app.MapProducts();
 
 app.Run();
 
