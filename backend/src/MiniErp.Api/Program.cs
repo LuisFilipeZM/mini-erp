@@ -9,6 +9,7 @@ using MiniErp.Api.Common;
 using MiniErp.Api.Data;
 using MiniErp.Api.Domain;
 using MiniErp.Api.Features.Auth;
+using MiniErp.Api.Features.Orders;
 using MiniErp.Api.Features.Products;
 using MiniErp.Api.Features.Stock;
 
@@ -77,6 +78,7 @@ app.MapGet("/health", () => Results.Ok(new { status = "ok" })).ExcludeFromDescri
 app.MapAuth();
 app.MapProducts();
 app.MapStock();
+app.MapOrders();
 
 app.Run();
 
