@@ -11,6 +11,7 @@ using MiniErp.Api.Domain;
 using MiniErp.Api.Features.Auth;
 using MiniErp.Api.Features.Orders;
 using MiniErp.Api.Features.Products;
+using MiniErp.Api.Features.Reports;
 using MiniErp.Api.Features.Stock;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -79,6 +80,7 @@ app.MapAuth();
 app.MapProducts();
 app.MapStock();
 app.MapOrders();
+app.MapReports();
 
 app.Run();
 
