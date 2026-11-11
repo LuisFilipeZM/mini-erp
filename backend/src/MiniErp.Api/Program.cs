@@ -15,6 +15,7 @@ using MiniErp.Api.Features.Products;
 using MiniErp.Api.Features.Reports;
 using MiniErp.Api.Features.Stock;
 using MiniErp.Api.Features.Users;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("pt-BR");
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<ErrorHandler>();
+builder.Services.AddOpenApi(o => o.AddDocumentTransformer<BearerSecurityTransformer>());
 
 var jwtSection = builder.Configuration.GetSection("Jwt");
 builder.Services.Configure<JwtOptions>(jwtSection);
@@ -66,6 +68,12 @@ app.UseStatusCodePages();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference(o => o.WithTitle("Mini ERP API"));
+}
 
 if (app.Configuration.GetValue<bool>("Database:MigrateOnStartup"))
 {
